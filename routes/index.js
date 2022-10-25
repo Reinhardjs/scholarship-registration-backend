@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/register', (req,res) => {
   res.json({
-    message: 'scholarship index'
+    message: 'scholarship index japan mext'
   })
 })
 
