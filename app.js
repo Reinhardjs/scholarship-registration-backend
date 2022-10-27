@@ -17,7 +17,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.get("/", (req, res) => {
-    res.send("Yo wassup, this is an api build with express, whoose v3!");
+    res.send("Yo wassup, this is an api build with express, whoose v4!");
 });
 
 app.listen(1234);
