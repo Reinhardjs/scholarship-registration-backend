@@ -3,14 +3,16 @@ const Validator = require("fastest-validator");
 const uuid = require('uuid')
 var router = express.Router();
 
-let uuidBytes = uuid.parse(uuid.v4());
-let uuidDataString = uuid.stringify(uuidBytes);
+
 
 const { registrant } = require('../models');
 
 const v = new Validator();
 
 router.post('/', async(req,res) =>{
+    let uuidBytes = uuid.parse(uuid.v4());
+    let uuidDataString = uuid.stringify(uuidBytes);
+
     const schema = {
         name: 'string',
         address: 'string',
@@ -27,6 +29,7 @@ router.post('/', async(req,res) =>{
 
 
     const register = await registrant.create({
+        
         id: uuidDataString,
         name: req.body.name,
         address: req.body.address,
