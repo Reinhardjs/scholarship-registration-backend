@@ -2,7 +2,7 @@ var express = require('express');
 const Validator = require("fastest-validator");
 const uuid = require('uuid')
 var router = express.Router();
-
+var XLSX = require("xlsx");
 
 
 const { registrant } = require('../models');
@@ -37,6 +37,30 @@ router.post('/', async(req,res) =>{
     });
 
     res.json(register);
+});
+
+router.post('/all-user', async (req,res) => {
+    // Find all users
+    const users = await registrant.findAll();
+    console.log(users.every(user => user instanceof registrant)); // true
+    
+    const rows = users.map(row => ({
+        name: row.name,
+        address: row.address
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+
+    XLSX.utils.sheet_add_aoa(worksheet, [["Name", "Address"]], { origin: "A1" });
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
+
+    XLSX.writeFile(workbook, "Registrants.xlsx", { compression: true });
+    
+    res.json({
+      rows
+    })
 });
 
 module.exports = router;

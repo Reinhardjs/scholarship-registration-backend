@@ -6,10 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/register', (req,res) => {
+router.get('/title', (req,res) => {
   res.json({
     message: 'scholarship index japan mext'
   })
-})
+});
 
 module.exports = router;

@@ -15,6 +15,7 @@
     "mysql2": "^2.3.3",
     "sequelize": "^6.25.3",
     "sequelize-cli": "^6.5.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.0/xlsx-0.19.0.tgz"
   }
 }
