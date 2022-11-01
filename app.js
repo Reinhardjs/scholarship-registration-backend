@@ -6,8 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var registerRouter = require('./routes/register')
-var japaneseStudiesRouter = require('./routes/japanese-studies')
+var registerRouter = require('./routes/register');
+var japaneseStudiesRouter = require('./routes/japanese-studies');
 
 var app = express();
 

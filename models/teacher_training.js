@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
-    const japaneseStudies = sequelize.define('japaneseStudies', {
+    const teacherTraining = sequelize.define('teacherTraining', {
         id: {
             type: DataTypes.STRING,
             primaryKey: true,
@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
           },
           birthdate:{
             type: DataTypes.DATE,
-            allowNull: false
-          },
-          japaneseResident:{
-            type: DataTypes.STRING,
             allowNull: false
           },
           province:{
@@ -52,15 +48,23 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
           },
+          lastEducation:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
           university:{
             type: DataTypes.STRING,
             allowNull: false
           },
-          semester:{
+          major:{
             type: DataTypes.STRING,
             allowNull: false
           },
           ipk:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          englishProficiency:{
             type: DataTypes.STRING,
             allowNull: false
           },
@@ -69,6 +73,26 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
           },
           jlptScore:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          teachingTime:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          teachingLocation:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          teachingProvince:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          teachingCity:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
+          teachingSubject:{
             type: DataTypes.STRING,
             allowNull: false
           },
@@ -85,8 +109,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
           }
     }, {
-        tableName : 'japanese_studies'
+        tableName : 'teacher_training'
     });
 
-    return japaneseStudies;
+    return teacherTraining;
 }

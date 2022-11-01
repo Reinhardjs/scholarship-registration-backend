@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('japanese_studies', { 
+    await queryInterface.createTable('teacher_training', { 
       id: {
         type: Sequelize.STRING,
         primaryKey: true,
@@ -23,10 +23,6 @@ module.exports = {
       },
       birthdate:{
         type: Sequelize.DATE,
-        allowNull: false
-      },
-      japaneseResident:{
-        type: Sequelize.STRING,
         allowNull: false
       },
       province:{
@@ -53,15 +49,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      lastEducation:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       university:{
         type: Sequelize.STRING,
         allowNull: false
       },
-      semester:{
+      major:{
         type: Sequelize.STRING,
         allowNull: false
       },
       ipk:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      englishProficiency:{
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -70,6 +74,26 @@ module.exports = {
         allowNull: false
       },
       jlptScore:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      teachingTime:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      teachingLocation:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      teachingProvince:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      teachingCity:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      teachingSubject:{
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -89,6 +113,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('japanese_studies');
+    await queryInterface.dropTable('teacher_training');
   }
 };
