@@ -8,10 +8,10 @@ add .env
 ```
 APP_NAME=scholarship-registration-mext
 
-DB_USERNAME=lotusbcm_root
-DB_PASSWORD=scholarship12345
+DB_USERNAME=[db_username]
+DB_PASSWORD=[db_password]
 DB_HOSTNAME=localhost
-DB_NAME=lotusbcm_scholarship
+DB_NAME=[db_name]
 DB_DIALECT=mysql
 ```
 
