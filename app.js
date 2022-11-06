@@ -23,3 +23,4 @@ app.use('/register', registerRouter);
 app.use('/japanese-studies', japaneseStudiesRouter);
 
 module.exports = app;
+app.listen('1234')
