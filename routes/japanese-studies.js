@@ -6,6 +6,7 @@ var router = express.Router();
 const { japanese_studies } = require('../models');
 
 const v = new Validator();
+let id = 1000;
 
 router.post('/', async(req,res) =>{
     let uuidBytes = uuid.parse(uuid.v4());
@@ -38,6 +39,8 @@ router.post('/', async(req,res) =>{
         .json(validate);
     }
 
+    let testId = "J" + req.body.city.charAt(0) + id;
+
 
     const register = await japanese_studies.create({
         id: uuidDataString,
@@ -59,6 +62,7 @@ router.post('/', async(req,res) =>{
         testLocation: req.body.testLocation
     });
 
+    id++;
     res.json(register);
 });
 
