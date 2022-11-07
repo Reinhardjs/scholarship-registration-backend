@@ -13,7 +13,6 @@
     "fastest-validator": "^1.15.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.3",
-    "nodemailer": "^6.8.0",
     "sequelize": "^6.25.3",
     "sequelize-cli": "^6.5.1",
     "uuid": "^9.0.0",
