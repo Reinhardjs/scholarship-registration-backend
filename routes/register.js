@@ -3,6 +3,15 @@ const Validator = require("fastest-validator");
 const uuid = require('uuid')
 var router = express.Router();
 var XLSX = require("xlsx");
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
 
 
 const { registrant } = require('../models');
@@ -20,12 +29,25 @@ router.post('/', async(req,res) =>{
     }
 
     const validate = v.validate(req.body, schema);
+    const testNumber = 1;
 
     if (validate.length){
         return res
         .status(400)
         .json(validate);
     }
+
+    const count = await registrant.count();
+
+    transporter.sendMail({
+        from: process.env.SMTP_EMAIL,
+        to: req.body.name, 
+        subject: "Registration Success", 
+        text: "No Ujian mu adalah " + testNumber + " kamu adalah pendaftar ke " + count
+    }).then(info => {
+        console.log({info});
+        testNumber++;
+    }).catch(console.error);
 
 
     const register = await registrant.create({
