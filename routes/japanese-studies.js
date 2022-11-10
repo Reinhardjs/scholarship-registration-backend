@@ -1,8 +1,10 @@
 var express = require('express');
 const Validator = require("fastest-validator");
-const uuid = require('uuid')
 var router = express.Router();
 const nodemailer = require('nodemailer');
+var XLSX = require("xlsx");
+const path = require('path');
+const fs = require('fs');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -16,9 +18,7 @@ const { japaneseStudies } = require('../models');
 
 const v = new Validator();
 
-router.post('/', async(req,res) =>{
-    let uuidBytes = uuid.parse(uuid.v4());
-    let uuidDataString = uuid.stringify(uuidBytes);
+router.post('/register', async(req,res) =>{
 
     const schema = {
         name: 'string',
@@ -72,13 +72,9 @@ router.post('/', async(req,res) =>{
         + "Mohon simpan dengan baik dan jangan sampai hilang.</b>"
     }).then(info => {
         console.log({info});
-        testNumber++;
     }).catch(console.error);
 
-
-
     const register = await japaneseStudies.create({
-        id: uuidDataString,
         testId: testId,
         name: req.body.name,
         gender: req.body.gender,
@@ -100,6 +96,58 @@ router.post('/', async(req,res) =>{
 
     res.json(register);
     }
+});
+
+router.get('/download-excel', async (req,res) => {
+    // Find all users
+    const users = await japaneseStudies.findAll();
+    console.log(users.every(user => user instanceof japaneseStudies)); // true
+    
+    const rows = users.map(row => ({
+        testId: row.testId,
+        name: row.name,
+        gender: row.gender,
+        birthdate: row.birthdate,
+        japaneseResident: row.japaneseResident,
+        province: row.province,
+        city: row.city,
+        address: row.address,
+        telephone: row.telephone,
+        handphone: row.handphone,
+        email: row.email,
+        university: row.university,
+        semester: row.semester,
+        ipk: row.ipk,
+        jlpt: row.jlpt,
+        jlptScore: row.jlptScore,
+        testLocation: row.testLocation
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const header = ["Test Number","Name", "Gender", "Birthdate", "Japanese Resident?", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
+    , "Semester", "IPK", "JLPT", "JLPT Score", "Test Location"];
+
+    XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
+
+    const downloadFolder = path.resolve(__dirname, "../downloads");
+    
+    if (!fs.existsSync(downloadFolder)) {
+        fs.mkdirSync(downloadFolder);
+    }
+    try {
+
+        XLSX.writeFile(workbook, "downloads/japaneseStudies.xlsx", { compression: true });
+    
+        res.download("downloads/japaneseStudies.xlsx");
+        
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+    
 });
 
 module.exports = router;

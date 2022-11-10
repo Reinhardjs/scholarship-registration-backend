@@ -4,6 +4,8 @@ const uuid = require('uuid')
 var router = express.Router();
 var XLSX = require("xlsx");
 const nodemailer = require('nodemailer');
+const path = require('path');
+const fs = require('fs');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -61,7 +63,7 @@ router.post('/', async(req,res) =>{
     res.json(register);
 });
 
-router.post('/all-user', async (req,res) => {
+router.get('/all-user', async (req,res) => {
     // Find all users
     const users = await registrant.findAll();
     console.log(users.every(user => user instanceof registrant)); // true
@@ -78,11 +80,22 @@ router.post('/all-user', async (req,res) => {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
 
-    XLSX.writeFile(workbook, "Registrants.xlsx", { compression: true });
+    const downloadFolder = path.resolve(__dirname, "../downloads");
     
-    res.json({
-      rows
-    })
+    if (!fs.existsSync(downloadFolder)) {
+        fs.mkdirSync(downloadFolder);
+    }
+    try {
+
+        XLSX.writeFile(workbook, "downloads/Registrants.xlsx", { compression: true });
+    
+        res.download("downloads/Registrants.xlsx");
+        
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+    
 });
 
 module.exports = router;
