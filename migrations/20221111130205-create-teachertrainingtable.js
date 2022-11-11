@@ -5,8 +5,9 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('teacher_training', { 
       id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false
       },
       testId: {

@@ -1,11 +1,10 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
     const teacherTraining = sequelize.define('teacherTraining', {
-        id: {
-            type: DataTypes.STRING,
+          id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
             allowNull: false
           },
           testId: {
