@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var japaneseStudiesRouter = require('./routes/japanese-studies');
+var teacherTrainingRouter = require('./routes/teacher-training');
 
 // app.use(logger('dev'));
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/japanese-studies', japaneseStudiesRouter);
+app.use('/teacher-training', teacherTrainingRouter);
 
 module.exports = app;
 app.listen('1234')

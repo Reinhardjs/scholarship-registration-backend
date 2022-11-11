@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const { japaneseStudies } = require('../models');
+const { teacherTraining } = require('../models');
 
 const v = new Validator();
 
@@ -22,20 +22,25 @@ router.post('/register', async(req,res) =>{
 
     const schema = {
         name: 'string',
+        gender: 'string',
+        birthdate: 'string',
+        province: 'string',
+        city: 'string',
         address: 'string',
         telephone: 'string',
         handphone: 'string',
-        gender: 'string',
-        birthdate: 'string',
         email: 'email',
-        japaneseResident: 'string',
-        province: 'string',
-        city: 'string',
+        lastEducation: 'string',
         university: 'string',
-        semester: 'string',
+        major: 'string',
         ipk: 'string',
+        englishProficiency: 'string',
         jlpt: 'string',
-        jlptScore: 'string',
+        teachingTime: 'string',
+        teachingLocation: 'string',
+        teachingProvince: 'string',
+        teachingCity: 'string',
+        teachingSubject: 'string',
         testLocation: 'string'
     }
 
@@ -47,18 +52,18 @@ router.post('/register', async(req,res) =>{
         .json(validate);
     }
 
-    const checkDuplicate = await japaneseStudies.findOne({ where: { email: req.body.email }});
+    const checkDuplicate = await teacherTraining.findOne({ where: { email: req.body.email }});
     if(checkDuplicate != null){
         res.send("Email Already Used");
     }else{
-        var countStudies = await japaneseStudies.count();
+        var countStudies = await teacherTraining.count();
     countStudies++;
     
-    const headerStudies = "PROGRAM JAPANESE STUDIES 2022"
+    const headerStudies = "PROGRAM TEACHER TRAINING 2022"
 
     var str = "" + countStudies
     var pad = "0000"
-    var testId = "J" + req.body.city.charAt(0).toUpperCase() + pad.substring(0, pad.length - str.length) + str
+    var testId = "T" + req.body.city.charAt(0).toUpperCase() + pad.substring(0, pad.length - str.length) + str
 
     transporter.sendMail({
         from: process.env.SMTP_EMAIL,
@@ -74,12 +79,12 @@ router.post('/register', async(req,res) =>{
         console.log({info});
     }).catch(console.error);
 
-    const register = await japaneseStudies.create({
+    const register = await teacherTraining.create({
         testId: testId,
         name: req.body.name,
         gender: req.body.gender,
         birthdate: req.body.birthdate,
-        japaneseResident: req.body.japaneseResident,
+        lastEducation: req.body.lastEducation,
         province: req.body.province,
         city: req.body.city,
         address: req.body.address,
@@ -87,10 +92,16 @@ router.post('/register', async(req,res) =>{
         handphone: req.body.handphone,
         email: req.body.email,
         university: req.body.university,
-        semester: req.body.semester,
+        major: req.body.major,
         ipk: req.body.ipk,
+        englishProficiency: req.body.englishProficiency,
         jlpt: req.body.jlpt,
         jlptScore: req.body.jlptScore,
+        teachingTime: req.body.teachingTime,
+        teachingLocation: req.body.teachingLocation,
+        teachingProvince: req.body.teachingProvince,
+        teachingCity: req.body.teachingCity,
+        teachingSubject: req.body.teachingSubject,
         testLocation: req.body.testLocation
     });
 
@@ -100,15 +111,15 @@ router.post('/register', async(req,res) =>{
 
 router.get('/download-excel', async (req,res) => {
     // Find all users
-    const users = await japaneseStudies.findAll();
-    console.log(users.every(user => user instanceof japaneseStudies)); // true
+    const users = await teacherTraining.findAll();
+    console.log(users.every(user => user instanceof teacherTraining)); // true
     
     const rows = users.map(row => ({
         testId: row.testId,
         name: row.name,
         gender: row.gender,
         birthdate: row.birthdate,
-        japaneseResident: row.japaneseResident,
+        lastEducation: row.lastEducation,
         province: row.province,
         city: row.city,
         address: row.address,
@@ -116,16 +127,22 @@ router.get('/download-excel', async (req,res) => {
         handphone: row.handphone,
         email: row.email,
         university: row.university,
-        semester: row.semester,
+        major: row.major,
         ipk: row.ipk,
+        englishProficiency: row.englishProficiency,
         jlpt: row.jlpt,
         jlptScore: row.jlptScore,
+        teachingTime: row.teachingTime,
+        teachingLocation: row.teachingLocation,
+        teachingProvince: row.teachingProvince,
+        teachingCity: row.teachingCity,
+        teachingSubject: row.teachingSubject,
         testLocation: row.testLocation
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(rows);
-    const header = ["Test Number","Name", "Gender", "Birthdate", "Japanese Resident?", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-    , "Semester", "IPK", "JLPT", "JLPT Score", "Test Location"];
+    const header = ["Test Number","Name", "Gender", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
+    , "Major", "IPK", "English Proficiency" , "JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location"];
 
     XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
 
@@ -139,9 +156,9 @@ router.get('/download-excel', async (req,res) => {
     }
     try {
 
-        XLSX.writeFile(workbook, "downloads/japaneseStudies.xlsx", { compression: true });
+        XLSX.writeFile(workbook, "downloads/teacherTraining.xlsx", { compression: true });
     
-        res.download("downloads/japaneseStudies.xlsx");
+        res.download("downloads/teacherTraining.xlsx");
         
     } catch (error) {
         console.log(error.message);
