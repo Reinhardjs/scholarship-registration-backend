@@ -2,6 +2,7 @@ var express = require('express');
 const Validator = require("fastest-validator");
 var router = express.Router();
 const nodemailer = require('nodemailer');
+const session = require('express-session');
 var XLSX = require("xlsx");
 const path = require('path');
 const fs = require('fs');
@@ -109,62 +110,6 @@ router.post('/register', async(req,res) =>{
     }
 });
 
-router.get('/download-excel', async (req,res) => {
-    // Find all users
-    const users = await teacherTraining.findAll();
-    console.log(users.every(user => user instanceof teacherTraining)); // true
-    
-    const rows = users.map(row => ({
-        testId: row.testId,
-        name: row.name,
-        gender: row.gender,
-        birthdate: row.birthdate,
-        lastEducation: row.lastEducation,
-        province: row.province,
-        city: row.city,
-        address: row.address,
-        telephone: row.telephone,
-        handphone: row.handphone,
-        email: row.email,
-        university: row.university,
-        major: row.major,
-        ipk: row.ipk,
-        englishProficiency: row.englishProficiency,
-        jlpt: row.jlpt,
-        jlptScore: row.jlptScore,
-        teachingTime: row.teachingTime,
-        teachingLocation: row.teachingLocation,
-        teachingProvince: row.teachingProvince,
-        teachingCity: row.teachingCity,
-        teachingSubject: row.teachingSubject,
-        testLocation: row.testLocation
-    }));
 
-    const worksheet = XLSX.utils.json_to_sheet(rows);
-    const header = ["Test Number","Name", "Gender", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-    , "Major", "IPK", "English Proficiency" , "JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location"];
-
-    XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
-
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
-
-    const downloadFolder = path.resolve(__dirname, "../downloads");
-    
-    if (!fs.existsSync(downloadFolder)) {
-        fs.mkdirSync(downloadFolder);
-    }
-    try {
-
-        XLSX.writeFile(workbook, "downloads/teacherTraining.xlsx", { compression: true });
-    
-        res.download("downloads/teacherTraining.xlsx");
-        
-    } catch (error) {
-        console.log(error.message);
-        throw error;
-    }
-    
-});
 
 module.exports = router;
