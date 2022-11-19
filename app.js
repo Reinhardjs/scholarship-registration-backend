@@ -14,8 +14,6 @@ var japaneseStudiesRouter = require('./routes/japanese-studies');
 var teacherTrainingRouter = require('./routes/teacher-training');
 var adminRouter = require('./routes/admin');
 
-var app = express();
-
 app.use(session({
 	secret: 'secret',
 	resave: true,
