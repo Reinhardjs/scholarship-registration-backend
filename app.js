@@ -14,6 +14,9 @@ var adminRouter = require('./routes/admin');
 
 var app = express();
 
+const cors = require('cors');
+app.use(cors());
+
 app.use(session({
 	secret: 'secret',
 	resave: true,
