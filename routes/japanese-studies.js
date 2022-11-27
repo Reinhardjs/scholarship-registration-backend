@@ -58,7 +58,7 @@ router.post('/register', async(req,res) =>{
 
     var str = "" + countStudies
     var pad = "0000"
-    var testId = "J" + req.body.city.charAt(0).toUpperCase() + pad.substring(0, pad.length - str.length) + str
+    var testId = "J" + req.body.testLocation.charAt(0).toUpperCase() + pad.substring(0, pad.length - str.length) + str
 
     transporter.sendMail({
         from: process.env.SMTP_EMAIL,
