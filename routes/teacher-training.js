@@ -42,7 +42,8 @@ router.post('/register', async(req,res) =>{
         teachingProvince: 'string',
         teachingCity: 'string',
         teachingSubject: 'string',
-        testLocation: 'string'
+        testLocation: 'string',
+        infoFrom: 'string'
     }
 
     const validate = v.validate(req.body, schema);
@@ -106,7 +107,8 @@ router.post('/register', async(req,res) =>{
         teachingProvince: req.body.teachingProvince,
         teachingCity: req.body.teachingCity,
         teachingSubject: req.body.teachingSubject,
-        testLocation: req.body.testLocation
+        testLocation: req.body.testLocation,
+        infoFrom: req.body.infoFrom
     });
 
     res.json(register);

@@ -95,6 +95,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
           },
+          infoFrom:{
+            type: DataTypes.STRING,
+            allowNull: false
+          },
           testLocation:{
             type: DataTypes.STRING,
             allowNull: false

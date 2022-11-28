@@ -36,7 +36,8 @@ router.post('/register', async(req,res) =>{
         ipk: 'string',
         jlpt: 'string',
         jlptScore: 'string',
-        testLocation: 'string'
+        testLocation: 'string',
+        infoFrom: 'string'
     }
 
     const validate = v.validate(req.body, schema);
@@ -95,7 +96,8 @@ router.post('/register', async(req,res) =>{
         ipk: req.body.ipk,
         jlpt: req.body.jlpt,
         jlptScore: req.body.jlptScore,
-        testLocation: req.body.testLocation
+        testLocation: req.body.testLocation,
+        infoFrom: req.body.infoFrom
     });
 
     res.json(register);

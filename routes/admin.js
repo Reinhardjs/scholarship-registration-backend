@@ -116,7 +116,8 @@ router.post('/teacher-training/download-excel', async (req,res) => {
           teachingProvince: row.teachingProvince,
           teachingCity: row.teachingCity,
           teachingSubject: row.teachingSubject,
-          testLocation: row.testLocation
+          testLocation: row.testLocation,
+          infoFrom: row.infoFrom
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
@@ -172,7 +173,8 @@ router.post('/japanese-studies/download-excel', async (req,res) => {
           ipk: row.ipk,
           jlpt: row.jlpt,
           jlptScore: row.jlptScore,
-          testLocation: row.testLocation
+          testLocation: row.testLocation,
+          infoFrom: row.infoFrom
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
