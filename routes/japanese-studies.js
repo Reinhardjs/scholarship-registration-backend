@@ -58,7 +58,11 @@ router.post('/register', async(req,res) =>{
 
     var str = "" + countStudies
     var pad = "0000"
-    var testId = "J" + req.body.testLocation.charAt(0).toUpperCase() + pad.substring(0, pad.length - str.length) + str
+    if(req.body.testLocation === "Makassar"){
+        var testId = "JU" + pad.substring(0, pad.length - str.length) + str
+    }else{
+        var testId = "J" + req.body.testLocation.charAt(0).toUpperCase() + pad.substring(0, pad.length - str.length) + str
+    }
 
     transporter.sendMail({
         from: process.env.SMTP_EMAIL,
