@@ -102,7 +102,7 @@ router.post('/register', async(req,res) =>{
         major: req.body.major,
         ipk: req.body.ipk,
         englishProficiency: req.body.englishProficiency,
-        englishProficiency: req.body.englishProficiencyScore,
+        englishProficiencyScore: req.body.englishProficiencyScore,
         jlpt: req.body.jlpt,
         jlptScore: req.body.jlptScore,
         teachingTime: req.body.teachingTime,
