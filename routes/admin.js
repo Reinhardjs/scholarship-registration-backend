@@ -97,6 +97,7 @@ router.post('/teacher-training/download-excel', async (req,res) => {
           testId: row.testId,
           name: row.name,
           gender: row.gender,
+          age: row.age,
           birthdate: row.birthdate,
           lastEducation: row.lastEducation,
           province: row.province,
@@ -109,6 +110,7 @@ router.post('/teacher-training/download-excel', async (req,res) => {
           major: row.major,
           ipk: row.ipk,
           englishProficiency: row.englishProficiency,
+          englishProficiencyScore: row.englishProficiencyScore,
           jlpt: row.jlpt,
           jlptScore: row.jlptScore,
           teachingTime: row.teachingTime,
@@ -121,8 +123,8 @@ router.post('/teacher-training/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["Test Number","Name", "Gender", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-      , "Major", "IPK", "English Proficiency" , "JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location"];
+      const header = ["Test Number","Name", "Gender", "Age","Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
+      , "Major", "IPK", "English Proficiency" , "TOEFL Score","JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
   
@@ -160,6 +162,7 @@ router.post('/japanese-studies/download-excel', async (req,res) => {
           testId: row.testId,
           name: row.name,
           gender: row.gender,
+          age: row.age,
           birthdate: row.birthdate,
           japaneseResident: row.japaneseResident,
           province: row.province,
@@ -178,7 +181,7 @@ router.post('/japanese-studies/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["Test Number","Name", "Gender", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
+      const header = ["Test Number","Name", "Gender", "Age", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
       , "Major", "IPK" , "JLPT", "JLPT Score", "Test Location"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });

@@ -23,6 +23,7 @@ router.post('/register', async(req,res) =>{
     const schema = {
         name: 'string',
         gender: 'string',
+        age: 'string',
         birthdate: 'string',
         japaneseResident: 'string',
         province: 'string',
@@ -50,12 +51,12 @@ router.post('/register', async(req,res) =>{
 
     const checkDuplicate = await japaneseStudies.findOne({ where: { email: req.body.email }});
     if(checkDuplicate != null){
-        res.send("Email Already Used");
+        res.send("Email Sudah Terpakai");
     }else{
         var countStudies = await japaneseStudies.count();
     countStudies++;
     
-    const headerStudies = "PROGRAM JAPANESE STUDIES 2022"
+    const headerStudies = "JAPANESE STUDIES 2023"
 
     var str = "" + countStudies
     var pad = "0000"
@@ -71,10 +72,9 @@ router.post('/register', async(req,res) =>{
         subject: headerStudies, 
         html: "<b>"+headerStudies+ "</b>" +"<br><br>Berikut data anda yang telah berhasil didaftarkan<br><br><b>Nama Lengkap: " + req.body.name
         + "<br>No Ujian: " + testId + "<br>Lokasi Ujian: " + req.body.testLocation
-        + "<br>Lengkapi berkas dan serahkan secara langsung atau kirimkan melalui pos ke Kedutaan Besar Jepang paling lambat 13 Januari 2022.<br><br>"
+        + "<br>Lengkapi berkas dan serahkan secara langsung atau kirimkan melalui kurir pengiriman ke Kedutaan Besar Jepang paling lambat 13 Januari 2022.<br><br>"
         + "Selain berkas yang akan dikirimkan, silakan simpan 1 rangkap berkas untuk arsip pribadi Anda.<br>"
-        + "Harap diperhatikan bahwa Nomor Ujian akan digunakan selama proses seleksi berlangsung, nomor ujian juga terdapat pada screenshot kartu pada saat anda selesai melakukan registrasi.<br><br>"
-        + "Mohon simpan dengan baik dan jangan sampai hilang.</b>"
+        + "Harap diperhatikan bahwa Nomor Ujian akan digunakan selama proses seleksi berlangsung.</b>"
     }).then(info => {
         console.log({info});
     }).catch(console.error);

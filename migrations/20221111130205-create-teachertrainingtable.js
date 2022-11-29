@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      age:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       birthdate:{
         type: Sequelize.DATE,
         allowNull: false
@@ -67,6 +71,10 @@ module.exports = {
         allowNull: false
       },
       englishProficiency:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      englishProficiencyScore:{
         type: Sequelize.STRING,
         allowNull: false
       },
