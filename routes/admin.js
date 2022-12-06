@@ -87,7 +87,7 @@ router.post('/japanese-studies/view', async(req, res, next) =>{
 });
 
 
-router.post('/teacher-training/download-excel', async (req,res) => {
+router.get('/teacher-training/download-excel', async (req,res) => {
   // Find all users
   if(req.session.loggedin){
       const users = await teacherTraining.findAll({order: [['id', 'ASC']]});
@@ -152,7 +152,7 @@ router.post('/teacher-training/download-excel', async (req,res) => {
   
 });
 
-router.post('/japanese-studies/download-excel', async (req,res) => {
+router.get('/japanese-studies/download-excel', async (req,res) => {
   // Find all users
   if(req.session.loggedin){
       const users = await japaneseStudies.findAll({order: [['id', 'ASC']]});
