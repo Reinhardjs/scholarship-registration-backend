@@ -94,11 +94,12 @@ router.get('/teacher-training/download-excel', async (req,res) => {
       console.log(users.every(user => user instanceof teacherTraining)); // true
       
       const rows = users.map(row => ({
+        id: row.id,
           testId: row.testId,
           name: row.name,
           gender: row.gender,
-          age: row.age,
           birthdate: row.birthdate,
+          age: row.age,
           lastEducation: row.lastEducation,
           province: row.province,
           city: row.city,
@@ -123,8 +124,8 @@ router.get('/teacher-training/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["Test Number","Name", "Gender", "Age","Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-      , "Major", "IPK", "English Proficiency" , "TOEFL Score","JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location"];
+      const header = ["No", "Test Number","Name", "Gender", "Birthdate", "Age", "Last Education", "Province", "City", "Address", "Handphone", "Telephone",  "Email", "University"
+      , "Major", "IPK", "English Proficiency" , "TOEFL Score","JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location", "Information From"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
   
@@ -159,17 +160,18 @@ router.get('/japanese-studies/download-excel', async (req,res) => {
       console.log(users.every(user => user instanceof teacherTraining)); // true
       
       const rows = users.map(row => ({
+        id: row.id,
           testId: row.testId,
           name: row.name,
           gender: row.gender,
-          age: row.age,
           birthdate: row.birthdate,
+          age: row.age,
           japaneseResident: row.japaneseResident,
+          address: row.address,
           province: row.province,
           city: row.city,
-          address: row.address,
-          telephone: row.telephone,
           handphone: row.handphone,
+          telephone: row.telephone,
           email: row.email,
           university: row.university,
           semester: row.semester,
@@ -181,8 +183,8 @@ router.get('/japanese-studies/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["Test Number","Name", "Gender", "Age", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-      , "Major", "IPK" , "JLPT", "JLPT Score", "Test Location"];
+      const header = ["No","Test Number","Name", "Gender", "Birthdate", "Age", "Japanese Resident", "Address", "Province", "City", "Handphone", "Telephone",  "Email", "University"
+      , "Major", "IPK" , "JLPT", "JLPT Score", "Test Location", "Information From"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
   
