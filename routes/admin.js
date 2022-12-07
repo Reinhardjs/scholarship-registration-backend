@@ -100,13 +100,13 @@ router.post('/teacher-training/download-excel', async (req,res) => {
           gender: row.gender,
           birthdate: row.birthdate,
           age: row.age,
-          lastEducation: row.lastEducation,
           province: row.province,
           city: row.city,
           address: row.address,
           telephone: row.telephone,
           handphone: row.handphone,
           email: row.email,
+          lastEducation: row.lastEducation,
           university: row.university,
           major: row.major,
           ipk: row.ipk,
@@ -124,7 +124,7 @@ router.post('/teacher-training/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["No", "Test Number","Name", "Gender", "Birthdate", "Age", "Last Education", "Province", "City", "Address", "Handphone", "Telephone",  "Email", "University"
+      const header = ["No", "Test Number","Name", "Gender", "Birthdate", "Age",  "Province", "City", "Address", "Handphone", "Telephone",  "Email", "Last Education", "University"
       , "Major", "IPK", "English Proficiency" , "TOEFL Score","JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location", "Information From"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
