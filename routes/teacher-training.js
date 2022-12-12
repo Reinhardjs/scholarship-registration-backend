@@ -58,7 +58,7 @@ router.post('/register', async(req,res) =>{
 
     const checkDuplicate = await teacherTraining.findOne({ where: { email: req.body.email }});
     if(checkDuplicate != null){
-        res.send("Email Sudah Terpakai");
+        res.send("Email sudah terdaftar. Silakan menggunakan alamat email yang lain.");
     }else{
         var countStudies = await teacherTraining.count();
     countStudies++;
