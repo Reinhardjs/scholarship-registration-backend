@@ -72,7 +72,7 @@ router.post('/register', async(req,res) =>{
         subject: headerStudies, 
         html: "<b>"+headerStudies+ "</b>" +"<br><br>Berikut data anda yang telah berhasil didaftarkan<br><br><b>Nama Lengkap: " + req.body.name
         + "<br>No Ujian: " + testId + "<br>Lokasi Ujian: " + req.body.testLocation
-        + "<br>Lengkapi berkas dan serahkan secara langsung atau kirimkan melalui kurir pengiriman ke Kedutaan Besar Jepang paling lambat 13 Januari 2022.<br><br>"
+        + "<br>Lengkapi berkas dan serahkan secara langsung atau kirimkan melalui kurir pengiriman ke Kedutaan Besar Jepang paling lambat 13 Januari 2023.<br><br>"
         + "Selain berkas yang akan dikirimkan, silakan simpan 1 rangkap berkas untuk arsip pribadi Anda.<br>"
         + "Harap diperhatikan bahwa Nomor Ujian akan digunakan selama proses seleksi berlangsung.</b>"
     }).then(info => {
