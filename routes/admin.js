@@ -182,7 +182,7 @@ router.post('/japanese-studies/download-excel', async (req,res) => {
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
       const header = ["Test Number","Name", "Gender", "Age", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-      , "Major", "IPK" , "JLPT", "JLPT Score", "Test Location"];
+      , "Semester", "IPK" , "JLPT", "JLPT Score", "Test Location"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
   
