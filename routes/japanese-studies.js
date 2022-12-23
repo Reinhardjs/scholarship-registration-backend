@@ -6,8 +6,19 @@ var XLSX = require("xlsx");
 const path = require("path");
 const fs = require("fs");
 
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.SMTP_EMAIL,
+//     pass: process.env.SMTP_PASSWORD,
+//   },
+// });
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  pool: true,
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: true, // use TLS
   auth: {
     user: process.env.SMTP_EMAIL,
     pass: process.env.SMTP_PASSWORD,
@@ -50,7 +61,9 @@ router.post("/register", async (req, res) => {
     where: { email: req.body.email },
   });
   if (checkDuplicate != null) {
-    res.send("Email Sudah Terpakai");
+    res.send(
+      "Email sudah terdaftar. Silakan menggunakan alamat email yang lain."
+    );
   } else {
     var countStudies = await japaneseStudies.count();
     countStudies++;

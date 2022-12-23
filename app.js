@@ -15,21 +15,32 @@ var adminRouter = require("./routes/admin");
 var app = express();
 
 const cors = require("cors");
-app.use(cors());
+const corsOptions = {
+  credentials: true,
+  origin: true,
+};
+app.use(cors(corsOptions));
 
+app.set("trust proxy", 1);
 app.use(
   session({
     secret: "secret",
     resave: true,
     saveUninitialized: true,
+    cookie: {
+     maxAge: 1000 * 60 * 60, // 1 hour
+     sameSite: "none",
+     secure: true
+    }
   })
 );
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "static")));
 
 app.use(logger("dev"));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));

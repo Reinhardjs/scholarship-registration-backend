@@ -87,25 +87,26 @@ router.post('/japanese-studies/view', async(req, res, next) =>{
 });
 
 
-router.post('/teacher-training/download-excel', async (req,res) => {
+router.get('/teacher-training/download-excel', async (req,res) => {
   // Find all users
   if(req.session.loggedin){
       const users = await teacherTraining.findAll({order: [['id', 'ASC']]});
       console.log(users.every(user => user instanceof teacherTraining)); // true
       
       const rows = users.map(row => ({
+        id: row.id,
           testId: row.testId,
           name: row.name,
           gender: row.gender,
-          age: row.age,
           birthdate: row.birthdate,
-          lastEducation: row.lastEducation,
+          age: row.age,
+          address: row.address,
           province: row.province,
           city: row.city,
-          address: row.address,
           telephone: row.telephone,
           handphone: row.handphone,
           email: row.email,
+          lastEducation: row.lastEducation,
           university: row.university,
           major: row.major,
           ipk: row.ipk,
@@ -123,8 +124,8 @@ router.post('/teacher-training/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["Test Number","Name", "Gender", "Age","Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-      , "Major", "IPK", "English Proficiency" , "TOEFL Score","JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location"];
+      const header = ["No", "Test Number","Name", "Gender", "Birthdate", "Age",  "Address","Province", "City",  "Handphone", "Telephone",  "Email", "Last Education", "University"
+      , "Major", "IPK", "English Proficiency" , "TOEFL Score","JLPT", "JLPT Score", "Teaching Time", "Teaching Location" , "Teaching Province" , "Teaching City" , "Teaching Subject" , "Test Location", "Information From"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
   
@@ -152,24 +153,25 @@ router.post('/teacher-training/download-excel', async (req,res) => {
   
 });
 
-router.post('/japanese-studies/download-excel', async (req,res) => {
+router.get('/japanese-studies/download-excel', async (req,res) => {
   // Find all users
   if(req.session.loggedin){
       const users = await japaneseStudies.findAll({order: [['id', 'ASC']]});
       console.log(users.every(user => user instanceof teacherTraining)); // true
       
       const rows = users.map(row => ({
+        id: row.id,
           testId: row.testId,
           name: row.name,
           gender: row.gender,
-          age: row.age,
           birthdate: row.birthdate,
+          age: row.age,
           japaneseResident: row.japaneseResident,
+          address: row.address,
           province: row.province,
           city: row.city,
-          address: row.address,
-          telephone: row.telephone,
           handphone: row.handphone,
+          telephone: row.telephone,
           email: row.email,
           university: row.university,
           semester: row.semester,
@@ -181,8 +183,8 @@ router.post('/japanese-studies/download-excel', async (req,res) => {
       }));
   
       const worksheet = XLSX.utils.json_to_sheet(rows);
-      const header = ["Test Number","Name", "Gender", "Age", "Birthdate", "Last Education", "Province", "City", "Address", "Telephone", "Handphone", "Email", "University"
-      , "Semester", "IPK" , "JLPT", "JLPT Score", "Test Location"];
+      const header = ["No","Test Number","Name", "Gender", "Birthdate", "Age", "Status WNJ", "Address", "Province", "City", "Handphone", "Telephone",  "Email", "University"
+      , "Major", "IPK" , "JLPT", "JLPT Score", "Test Location", "Information From"];
   
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
   
