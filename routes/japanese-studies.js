@@ -88,18 +88,19 @@ router.post("/register", async (req, res) => {
         to: req.body.email,
         subject: headerStudies,
         html:
-          "<b>" +
-          headerStudies +
-          "</b>" +
-          "<br><br>Berikut data anda yang telah berhasil didaftarkan<br><br><b>Nama Lengkap: " +
+          "Email Konfirmasi <br><br>" +
+          "Berikut data anda yang telah berhasil didaftarkan<br><br>" +
+          "<b>Nama Lengkap: " +
           req.body.name +
           "<br>No Ujian: " +
           testId +
           "<br>Lokasi Ujian: " +
           req.body.testLocation +
-          "<br>Lengkapi berkas dan serahkan secara langsung atau kirimkan melalui kurir pengiriman ke Kedutaan Besar Jepang paling lambat 13 Januari 2022.<br><br>" +
-          "Selain berkas yang akan dikirimkan, silakan simpan 1 rangkap berkas untuk arsip pribadi Anda.<br>" +
-          "Harap diperhatikan bahwa Nomor Ujian akan digunakan selama proses seleksi berlangsung.</b>",
+          "</b><br><br>" +
+          'Cetak/print email ini untuk melengkapi poin 1 "Dokumen yang diperlukan" dan kirimkan bersama dokumen lainnya melalui jasa pengiriman / serahkan ke Kedutaan Besar Jepang paling lambat <b>18 Januari 2023</b>' +
+          "<br><br>Selain berkas yang dikirimkan, silakan simpan 1 rangkap berkas untuk arsip pribadi Anda. <br>" +
+          "Harap diperhatikan bahwa Nomor Ujian hanya diberikan satu kali.<br>" +
+          "Nomor Ujian akan digunakan selama proses seleksi berlangsung",
       })
       .then((info) => {
         console.log({ info });
