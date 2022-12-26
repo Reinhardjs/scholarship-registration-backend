@@ -17,7 +17,7 @@ var app = express();
 const cors = require("cors");
 const corsOptions = {
   credentials: true,
-  origin: true,
+  origin: ["https://daftarbeasiswamext.com"],
 };
 app.use(cors(corsOptions));
 
@@ -28,13 +28,12 @@ app.use(
     resave: true,
     saveUninitialized: true,
     cookie: {
-     maxAge: 1000 * 60 * 60, // 1 hour
-     sameSite: "none",
-     secure: true
-    }
+      maxAge: 1000 * 60 * 60, // 1 hour
+      sameSite: "none",
+      secure: true,
+    },
   })
 );
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
