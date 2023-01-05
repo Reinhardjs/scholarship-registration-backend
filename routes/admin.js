@@ -4,10 +4,22 @@ const session = require('express-session');
 const path = require('path');
 var XLSX = require("xlsx");
 const fs = require('fs');
+const nodemailer = require("nodemailer");
 
 const { user } = require('../models');
 const { teacherTraining } = require('../models');
 const { japaneseStudies } = require('../models');
+
+const transporter = nodemailer.createTransport({
+  pool: true,
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: true, // use TLS
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
 
 
 
@@ -85,6 +97,64 @@ router.post('/japanese-studies/view', async(req, res, next) =>{
     res.send('Please login to view this page!');
 }
 });
+
+router.post('/resend-email', async(req, res, next) =>{
+	if (req.session.loggedin) {
+    var user = null;
+    var headerStudies = "";
+    
+
+    if(req.body.table == 'Japanese Studies'){
+      headerStudies = "JAPANESE STUDIES 2023";
+      user = await japaneseStudies.findOne({ where: { email: req.body.email } });
+      if (user == null) {
+        res.send('User Not found!');
+      } else{
+        resendEmail(user, headerStudies);
+        res.send('Email Sent Successfully');
+      }
+    }else{
+      headerStudies = "TEACHER TRAINING 2023";
+      user = await teacherTraining.findOne({ where: { email: req.body.email } });
+      if (user === null) {
+        res.send('User Not found!');
+      } else{
+        resendEmail(user, headerStudies);
+        res.send('Email Sent Successfully');
+      }
+    }
+  
+	}else{
+    res.send('Please login to view this page!');
+}
+});
+
+function resendEmail(user, headerStudies){
+  transporter
+      .sendMail({
+        from: process.env.SMTP_EMAIL,
+        to: user.email,
+        subject: headerStudies,
+        html:
+          "Email Konfirmasi <br><br>" +
+          "Berikut data anda yang telah berhasil didaftarkan<br><br>" +
+          "<b>Nama Lengkap: " +
+          user.name +
+          "<br>No Ujian: " +
+          user.testId +
+          "<br>Lokasi Ujian: " +
+          user.testLocation +
+          "</b><br><br>" +
+          'Cetak/print email ini untuk melengkapi poin 1 "Dokumen yang diperlukan" dan kirimkan bersama dokumen lainnya melalui jasa pengiriman / serahkan ke Kedutaan Besar Jepang paling lambat <b>18 Januari 2023</b>' +
+          "<br><br>Selain berkas yang dikirimkan, silakan simpan 1 rangkap berkas untuk arsip pribadi Anda. <br>" +
+          "Harap diperhatikan bahwa Nomor Ujian hanya diberikan satu kali.<br>" +
+          "Nomor Ujian akan digunakan selama proses seleksi berlangsung",
+      })
+      .then((info) => {
+        console.log({ info });
+      })
+      .catch(console.error);
+}
 
 
 router.get('/teacher-training/download-excel', async (req,res) => {
